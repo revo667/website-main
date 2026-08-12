@@ -3,9 +3,9 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
-    target: "node",
+    target: "cloudflare-module",
   },
   nitro: {
-    preset: "node-server",
+    preset: "cloudflare_module",
   },
 });
