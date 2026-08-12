@@ -8,6 +8,7 @@ import { PostsSection } from "@/components/PostsSection";
 import { AboutSection } from "@/components/AboutSection";
 import { LinksSection } from "@/components/LinksSection";
 import { SiberHUD } from "@/components/SiberHUD";
+import { TradingLink } from "@/components/TradingLink";
 import { Terminal } from "@/components/Terminal";
 import { CustomCursor } from "@/components/CustomCursor";
 import { SplashScreen } from "@/components/SplashScreen";
@@ -76,6 +77,7 @@ function Index() {
       {/* Global Bileşenler */}
       <CustomCursor />
       <SiberHUD />
+      <TradingLink />
       <SoundManager autoHideDelay={soundManagerDelay} />
       <ScrollProgressBar currentPage={active} />
       {active === 0 && !showSplash && <ScrollDownHint />}
