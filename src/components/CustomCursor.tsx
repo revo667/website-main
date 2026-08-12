@@ -1,65 +1,103 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const [hidden, setHidden] = useState(true);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    // Sitenin kendi imlecini tamamen gizle
+    // Sadece gerçek fare (touch değil) olan cihazlarda çalıştır
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+    setEnabled(true);
+
     document.documentElement.classList.add("cursor-none");
 
-    // Hataları çözen kritik değişken tanımlamaları burada başlıyor:
     let mouseX = 0;
     let mouseY = 0;
-    let isRequested = false;
+    let frame = 0;
 
-    const updateCursorPosition = () => {
-      if (cursorRef.current) {
-        cursorRef.current.style.transform =
-          `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
-      }
-      isRequested = false;
+    const render = () => {
+      frame = 0;
+      const el = cursorRef.current;
+      if (!el) return;
+      // Tek transform: sadece konum. Merkezleme çocuk elemanlarda yapılıyor.
+      el.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+      el.style.opacity = "1";
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      setHidden(false);
       mouseX = e.clientX;
       mouseY = e.clientY;
-
-      if (!isRequested) {
-        requestAnimationFrame(updateCursorPosition);
-        isRequested = true;
-      }
+      if (!frame) frame = requestAnimationFrame(render);
     };
 
-    const handleMouseLeave = () => setHidden(true);
-    const handleMouseEnter = () => setHidden(false);
+    const handleMouseLeave = () => {
+      if (cursorRef.current) cursorRef.current.style.opacity = "0";
+    };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("pointermove", handleMouseMove, { passive: true });
     document.addEventListener("mouseleave", handleMouseLeave);
-    document.addEventListener("mouseenter", handleMouseEnter);
 
     return () => {
       document.documentElement.classList.remove("cursor-none");
+      if (frame) cancelAnimationFrame(frame);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("pointermove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
-      document.removeEventListener("mouseenter", handleMouseEnter);
     };
-  }, []); // İşte o altta kalan dizi kapatması buraya ait!
+  }, []);
 
-  if (hidden) return null;
+  if (!enabled) return null;
 
   return (
     <div
       ref={cursorRef}
-      className="pointer-events-none fixed top-0 left-0 z-[9999] hidden -translate-x-1/2 -translate-y-1/2 items-center justify-center md:flex will-change-transform"
-      style={{ transition: "none !important" }}
+      aria-hidden="true"
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: 0,
+        height: 0,
+        zIndex: 9999,
+        pointerEvents: "none",
+        opacity: 0,
+        transition: "none",
+        willChange: "transform",
+      }}
     >
-      {/* Merkezdeki Keskin Beyaz Nokta */}
-      <div className="absolute h-1 w-1 rounded-full bg-white shadow-[0_0_8px_2px_rgba(255,255,255,1)]" />
+      {/* Beyaz glow aura — imlecin tam merkezinde */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: 32,
+          height: 32,
+          marginTop: -16,
+          marginLeft: -16,
+          borderRadius: "9999px",
+          background: "rgba(255,255,255,0.10)",
+          filter: "blur(12px)",
+          boxShadow: "0 0 25px 6px rgba(255,255,255,0.25)",
+        }}
+      />
 
-      {/* İstediğiniz Beyaz Glow Aura */}
-      <div className="h-8 w-8 rounded-full bg-white/10 blur-md shadow-[0_0_25px_6px_rgba(255,255,255,0.25)]" />
+      {/* Keskin beyaz nokta — tam pointer noktası */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: 4,
+          height: 4,
+          marginTop: -2,
+          marginLeft: -2,
+          borderRadius: "9999px",
+          background: "#fff",
+          boxShadow: "0 0 8px 2px rgba(255,255,255,1)",
+        }}
+      />
     </div>
   );
 }

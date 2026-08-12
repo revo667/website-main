@@ -831,3 +831,9 @@ input:focus-visible {
     transform: translateY(10px);
   }
 }
+
+/* Custom cursor: native imleci gizle */
+html.cursor-none,
+html.cursor-none * {
+  cursor: none !important;
+}
