@@ -14,6 +14,7 @@ import { SplashScreen } from "@/components/SplashScreen";
 import { SoundManager } from "@/components/SoundManager";
 import { ScrollProgressBar } from "@/components/ScrollProgressBar";
 import { ScrollDownHint } from "@/components/ScrollDownHint";
+import Star3D from "@/components/Star3D";
 
 const TOTAL = 4;
 
@@ -78,6 +79,9 @@ function Index() {
       {active === 0 && !showSplash && <ScrollDownHint />}
       <Terminal isOpen={showTerminal} onClose={() => setShowTerminal(false)} />
 
+      {/* 3D KROM YILDIZ: ana sayfada ortada, diğer bölümlerde üst kenarda */}
+      <Star3D active={active} />
+
       {/* ANA KONTEYNER */}
       <div className="relative h-screen overflow-hidden bg-neutral-950 select-none">
         {/* YAĞMUR EFEKTİ: z-0 ile en arkada */}
@@ -92,11 +96,11 @@ function Index() {
         >
           {/* Home Section */}
           <section className="h-screen w-full flex items-center justify-center bg-transparent">
-            <div className="flex flex-col items-center gap-6">
-              <img
-                src="/resim.png"
-                alt="Logo"
-                className="h-36 w-36 rounded-full border border-white/10"
+            <div className="flex flex-col items-center gap-6 pb-[140px]">
+              {/* Yıldızın yer tuttuğu alan (logo buradan kalktı) */}
+              <div
+                aria-hidden
+                className="h-[min(60vh,600px)] w-[min(60vh,600px)]"
               />
               <div className="text-5xl text-white">
                 <TypingText text="revo667" speed={100} />
