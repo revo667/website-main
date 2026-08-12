@@ -22,6 +22,8 @@ function Index() {
   const [active, setActive] = useState(0);
   const [showSplash, setShowSplash] = useState(true);
   const [showTerminal, setShowTerminal] = useState(false);
+  // Bölüme her girişte içeriği yeniden mount etmek için (giriş animasyonları)
+  const [visits, setVisits] = useState<Record<number, number>>({});
   const lockRef = useRef(false);
   const { audioRef, currentSound } = useGlobalAudio();
 
@@ -31,6 +33,7 @@ function Index() {
     if (next === active || lockRef.current) return;
     lockRef.current = true;
     setActive(next);
+    setVisits((v) => ({ ...v, [next]: (v[next] ?? 0) + 1 }));
     setTimeout(() => {
       lockRef.current = false;
     }, 750);
@@ -59,12 +62,11 @@ function Index() {
 
   return (
     <>
-      <audio 
-        ref={audioRef} 
-        src={currentSound.url} 
-        loop 
+      <audio
+        ref={audioRef}
+        src={currentSound.url}
+        loop
         preload="auto"
-        crossOrigin="anonymous"
         onError={(e) => console.error('Audio element error:', e)}
       />
 
@@ -108,17 +110,17 @@ function Index() {
             </div>
           </section>
 
-          {/* Diğer Bölümler */}
+          {/* Diğer Bölümler — key değişince giriş animasyonları tekrar oynar */}
           <section className="h-screen w-full bg-transparent">
-            <LinksSection />
+            <LinksSection key={`links-${visits[1] ?? 0}`} />
           </section>
 
           <section className="h-screen w-full bg-transparent">
-            <AboutSection />
+            <AboutSection key={`about-${visits[2] ?? 0}`} />
           </section>
 
           <section className="h-screen w-full bg-transparent">
-            <PostsSection />
+            <PostsSection key={`posts-${visits[3] ?? 0}`} />
           </section>
         </div>
       </div>

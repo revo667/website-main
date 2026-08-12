@@ -15,7 +15,8 @@ export function CustomCursor() {
 
     const updateCursorPosition = () => {
       if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+        cursorRef.current.style.transform =
+          `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
       }
       isRequested = false;
     };
@@ -51,7 +52,7 @@ export function CustomCursor() {
   return (
     <div
       ref={cursorRef}
-      className="pointer-events-none fixed top-0 left-0 z-50 hidden -translate-x-1/2 -translate-y-1/2 items-center justify-center md:flex will-change-transform"
+      className="pointer-events-none fixed top-0 left-0 z-[9999] hidden -translate-x-1/2 -translate-y-1/2 items-center justify-center md:flex will-change-transform"
       style={{ transition: "none !important" }}
     >
       {/* Merkezdeki Keskin Beyaz Nokta */}
