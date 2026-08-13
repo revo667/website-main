@@ -79,15 +79,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "revo667" },
-      { name: "description", content: "revo667.live" },
+      { name: "description", content: "revo667.com" },
       { name: "author", content: "Selim Yildiz" },
       { property: "og:title", content: "revo667" },
-      { property: "og:description", content: "revo667.live" },
+      { property: "og:description", content: "revo667.com" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@revo667" },
     ],
     links: [
+      // .ico içinde 16'dan 256'ya altı boyut var ve her biri ayrı çizildi:
+      // küçüldükçe kenar boşluğu azalıyor, yoksa 16 pikselde işaret eziliyor.
+      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
+      { rel: "icon", type: "image/png", href: "/favicon.png", sizes: "any" },
+      // iOS köşeleri kendi yuvarlıyor, bu yüzden kare ve saydamlıksız.
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
       {
         rel: "stylesheet",
         href: "https://fonts.cdnfonts.com/css/zf2334-after-a-rain",

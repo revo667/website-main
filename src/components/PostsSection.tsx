@@ -5,22 +5,22 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const ADMIN_POSTS = [
   {
     id: 1,
-    title: "Sistem Güncellemesi",
+    title: "Trading Journal",
     content: "Project published.",
     author: "revo667",
-    date: "16.06.2026",
+    date: "13.08.2026",
   },
   {
     id: 2,
-    title: "Yeni Özellik",
+    title: "audentes fortuna iuvat",
     content: "New features added.",
     author: "revo667",
-    date: "15.06.2026",
+    date: "12.08.2026",
   },
   {
     id: 3,
-    title: "Bug Fixes",
-    content: "Several bugs fixed.",
+    title: "Website Update",
+    content: "Several bugs fixed, 3d assets added.",
     author: "revo667",
     date: "14.06.2026",
   },

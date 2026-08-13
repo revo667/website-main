@@ -8,13 +8,13 @@ export function AboutSection() {
         About
       </h2>
       <p className="max-w-xl text-base leading-relaxed text-white/70 md:text-lg animate-[fadeInUp_0.8s_ease-out_0.2s_backwards]">
-        Hi, Selim Yildiz as known as revo667. 20y/o
+        6 digit daytrader, software engineer, victim of paranoia
       </p>
       <span
         className="mt-8 text-sm tracking-widest text-white/40 animate-[fadeInUp_0.8s_ease-out_0.4s_backwards] hover:text-violet-400 transition-colors cursor-pointer"
         style={{ fontFamily: "'ZF2334 After A Rain', sans-serif" }}
       >
-        Contact revo667@proton.me
+        contact@revo667.com
       </span>
     </div>
   );
