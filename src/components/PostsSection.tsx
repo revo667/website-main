@@ -5,15 +5,15 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const ADMIN_POSTS = [
   {
     id: 1,
-    title: "Trading Journal",
-    content: "Project published.",
+    title: "project published",
+    content: "Trading Journal",
     author: "revo667",
     date: "13.08.2026",
   },
   {
     id: 2,
-    title: "audentes fortuna iuvat",
-    content: "New features added.",
+    title: "lorem ipsum",
+    content: "audentes fortuna iuvat.",
     author: "revo667",
     date: "12.08.2026",
   },
