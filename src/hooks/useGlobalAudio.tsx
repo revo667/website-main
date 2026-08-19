@@ -21,7 +21,7 @@ const GlobalAudioContext = createContext<GlobalAudioContextType | undefined>(und
 export function GlobalAudioProvider({ children }: { children: ReactNode }) {
   const [isPlaying, setIsPlayingState] = useState(false);
   const [currentSound, setCurrentSoundState] = useState<Sound>(SOUNDS[0]);
-  const [volume, setVolumeState] = useState(0.5);
+  const [volume, setVolumeState] = useState(0.15);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { selectedSound, saveMusic } = useMusicPreference();
 
