@@ -1,9 +1,4 @@
 const TRADING_URL = "https://trading.revo667.com";
-
-/**
- * Sağ üstteki Trading bağlantısı. SiberHUD'un (sol üst) aynası:
- * aynı mono font, aynı boyut, aynı kenar çizgisi dili.
- */
 export function TradingLink() {
   return (
     <a

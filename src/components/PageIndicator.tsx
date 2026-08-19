@@ -3,16 +3,16 @@ interface PageIndicatorProps {
   count: number;
   onSelect: (index: number) => void;
 }
-
 export function PageIndicator({ activeIndex, count, onSelect }: PageIndicatorProps) {
-  const lineHeight = 48; // px (h-12)
-  const gap = 16; // px (gap-4)
+  const lineHeight = 48;
+  const gap = 16;
   const step = lineHeight + gap;
-
   return (
     <div className="fixed right-6 top-1/2 z-30 -translate-y-1/2">
       <div className="relative flex flex-col gap-4">
-        {Array.from({ length: count }).map((_, i) => (
+        {Array.from({
+          length: count,
+        }).map((_, i) => (
           <button
             key={i}
             onClick={() => onSelect(i)}

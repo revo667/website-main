@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import { Volume2, VolumeX, Music, Pause, Play } from "lucide-react";
 import { SOUNDS, Sound } from "../constants/sounds";
 import { useGlobalAudio } from "../hooks/useGlobalAudio";
-
 export function SoundManager({ autoHideDelay }: { autoHideDelay?: number }) {
   const [showPanel, setShowPanel] = useState(true);
-
   useEffect(() => {
     if (autoHideDelay) {
       const timer = setTimeout(() => {
@@ -16,21 +14,18 @@ export function SoundManager({ autoHideDelay }: { autoHideDelay?: number }) {
   }, [autoHideDelay]);
   const { isPlaying, currentSound, volume, setIsPlaying, setCurrentSound, setVolume } =
     useGlobalAudio();
-
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
   };
-
   const changeSound = (sound: Sound) => {
     setCurrentSound(sound);
   };
-
   return (
     <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 font-mono">
-      {/* Ana Panel */}
+      {}
       {showPanel && (
         <div className="bg-neutral-950/80 backdrop-blur-xl border border-violet-500/30 rounded-lg p-5 shadow-[0_0_30px_rgba(139,92,246,0.2)] w-64 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          {/* Başlık */}
+          {}
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
             <div className="flex items-center gap-2 text-violet-400">
               <Music size={14} className="animate-pulse" />
@@ -44,7 +39,7 @@ export function SoundManager({ autoHideDelay }: { autoHideDelay?: number }) {
             </button>
           </div>
 
-          {/* Şu Çalan Şarkı */}
+          {}
           <div className="mb-4 p-3 bg-violet-500/10 border border-violet-500/20 rounded text-center">
             <p className="text-[10px] uppercase tracking-wider text-white/50 mb-1">Şu Anda</p>
             <p className="text-sm font-bold text-violet-300 truncate">{currentSound.name}</p>
@@ -56,7 +51,7 @@ export function SoundManager({ autoHideDelay }: { autoHideDelay?: number }) {
             )}
           </div>
 
-          {/* Müzik Listesi */}
+          {}
           <div className="flex flex-col gap-2 mb-4 max-h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-violet-500/30 scrollbar-track-transparent">
             {SOUNDS.map((sound: Sound) => {
               const isSelected = currentSound.id === sound.id;
@@ -64,11 +59,7 @@ export function SoundManager({ autoHideDelay }: { autoHideDelay?: number }) {
                 <button
                   key={sound.id}
                   onClick={() => changeSound(sound)}
-                  className={`text-xs uppercase tracking-wider px-3 py-2 rounded border-l-4 transition-all text-left ${
-                    isSelected
-                      ? "bg-violet-500/20 border-violet-500 text-violet-300 font-semibold shadow-[0_0_10px_rgba(139,92,246,0.3)]"
-                      : "bg-white/5 border-white/10 text-white/50 hover:text-white hover:bg-white/10"
-                  }`}
+                  className={`text-xs uppercase tracking-wider px-3 py-2 rounded border-l-4 transition-all text-left ${isSelected ? "bg-violet-500/20 border-violet-500 text-violet-300 font-semibold shadow-[0_0_10px_rgba(139,92,246,0.3)]" : "bg-white/5 border-white/10 text-white/50 hover:text-white hover:bg-white/10"}`}
                 >
                   {sound.name}
                 </button>
@@ -76,7 +67,7 @@ export function SoundManager({ autoHideDelay }: { autoHideDelay?: number }) {
             })}
           </div>
 
-          {/* Volume Kontrol */}
+          {}
           <div className="mb-4 pb-4 border-b border-white/10">
             <div className="flex items-center gap-2 mb-2">
               {volume === 0 ? (
@@ -99,15 +90,11 @@ export function SoundManager({ autoHideDelay }: { autoHideDelay?: number }) {
             />
           </div>
 
-          {/* Kontrol Butonları */}
+          {}
           <div className="flex gap-2">
             <button
               onClick={togglePlay}
-              className={`flex-1 py-2.5 text-xs uppercase tracking-wider font-semibold rounded transition-all flex items-center justify-center gap-1.5 button-interactive ${
-                isPlaying
-                  ? "bg-red-500/20 text-red-400 border border-red-500/50 hover:bg-red-500/30"
-                  : "bg-green-500/20 text-green-400 border border-green-500/50 hover:bg-green-500/30"
-              }`}
+              className={`flex-1 py-2.5 text-xs uppercase tracking-wider font-semibold rounded transition-all flex items-center justify-center gap-1.5 button-interactive ${isPlaying ? "bg-red-500/20 text-red-400 border border-red-500/50 hover:bg-red-500/30" : "bg-green-500/20 text-green-400 border border-green-500/50 hover:bg-green-500/30"}`}
             >
               {isPlaying ? (
                 <>
@@ -132,7 +119,7 @@ export function SoundManager({ autoHideDelay }: { autoHideDelay?: number }) {
         </div>
       )}
 
-      {/* Gizlenmiş Panel - Mini Buton */}
+      {}
       {!showPanel && (
         <button
           onClick={() => setShowPanel(true)}

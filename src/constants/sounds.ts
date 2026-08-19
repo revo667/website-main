@@ -1,13 +1,10 @@
-// src/constants/sounds.ts
 import { CloudRain, CloudLightning, Waves, Music, LucideIcon } from "lucide-react";
-
 export interface Sound {
   id: string;
   name: string;
   url: string;
   icon: LucideIcon;
 }
-
 export const SOUNDS: Sound[] = [
   {
     id: "likeastar",

@@ -44,8 +44,8 @@ export function ScrollProgressBar({ currentPage = 0 }: { currentPage?: number })
                 isVisited
                   ? "bg-violet-500 shadow-[0_0_8px_rgba(139,92,246,0.6)]"
                   : isActive
-                  ? "bg-violet-400 shadow-[0_0_10px_rgba(139,92,246,0.8)]"
-                  : "bg-white/20 hover:bg-white/40"
+                    ? "bg-violet-400 shadow-[0_0_10px_rgba(139,92,246,0.8)]"
+                    : "bg-white/20 hover:bg-white/40"
               }`}
               aria-label={`Go to page ${index + 1}`}
             />

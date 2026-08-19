@@ -78,7 +78,6 @@
   }
 }
 
-/* Rain Effect */
 .rain-container {
   position: fixed;
   inset: 0;
@@ -103,7 +102,6 @@
   }
 }
 
-/* Splash Screen Animasyonları */
 @keyframes slideInFromBottom {
   from {
     opacity: 0;
@@ -196,7 +194,6 @@
   }
 }
 
-/* Utility Classes */
 .animate-in {
   animation: slideInFromBottom 0.5s ease-out forwards;
 }
@@ -232,7 +229,6 @@
   animation: shimmer 3s infinite;
 }
 
-/* Splash Screen Özel Stiller */
 .splash-container {
   position: fixed;
   inset: 0;
@@ -351,7 +347,6 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Volume Slider */
 input[type="range"] {
   appearance: none;
   background: transparent;
@@ -392,7 +387,6 @@ input[type="range"]::-moz-range-thumb {
   box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
 }
 
-/* Click to Open Text */
 .click-to-open {
   text-align: center;
   animation: slideInFromBottom 0.8s ease-out 0.3s both;
@@ -435,7 +429,6 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Responsive */
 @media (max-width: 640px) {
   .splash-title {
     font-size: 2.5rem;
@@ -446,9 +439,6 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* ===== ADVANCED ANIMATIONS ===== */
-
-/* Smooth Page Transitions */
 @keyframes slideInUp {
   from {
     opacity: 0;
@@ -526,7 +516,6 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Stagger Animation */
 @keyframes staggerIn {
   0% {
     opacity: 0;
@@ -538,9 +527,9 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Glow Effects */
 @keyframes glowSoft {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
   }
   50% {
@@ -549,7 +538,8 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @keyframes glowBright {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
   }
   50% {
@@ -557,7 +547,6 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Smooth Hover Effects */
 @keyframes scaleUp {
   from {
     transform: scale(1);
@@ -576,7 +565,6 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Rotating Elements */
 @keyframes rotate360 {
   from {
     transform: rotate(0deg);
@@ -587,7 +575,8 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @keyframes rotateGently {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotateY(0deg);
   }
   50% {
@@ -595,9 +584,9 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Floating Effect */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -605,9 +594,9 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Pulse Effect */
 @keyframes pulseSoft {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -616,7 +605,8 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @keyframes pulseGlow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7);
   }
   70% {
@@ -624,7 +614,6 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Gradient Animation */
 @keyframes gradientFlow {
   0% {
     background-position: 0% 50%;
@@ -637,9 +626,9 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Text Shadow Animation */
 @keyframes textGlowPulse {
-  0%, 100% {
+  0%,
+  100% {
     text-shadow:
       0 0 10px rgba(139, 92, 246, 0.3),
       0 0 20px rgba(139, 92, 246, 0.2);
@@ -651,7 +640,6 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Button Press Effect */
 @keyframes buttonPress {
   0% {
     transform: scale(1);
@@ -664,12 +652,10 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Smooth Scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Section Entrance Animations */
 .section-enter {
   animation: slideInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
@@ -678,7 +664,6 @@ html {
   animation: staggerIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-/* Text Animation Classes */
 .text-fade-in {
   animation: fadeInUp 1s ease-out forwards;
 }
@@ -688,7 +673,6 @@ html {
   opacity: 0;
 }
 
-/* Interactive Button Classes */
 .button-interactive {
   position: relative;
   overflow: hidden;
@@ -705,18 +689,13 @@ html {
 }
 
 .button-interactive::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   transition: left 0.5s;
 }
 
@@ -724,7 +703,6 @@ html {
   left: 100%;
 }
 
-/* Card Hover Effects */
 .card-hover {
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
@@ -735,25 +713,22 @@ html {
   box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
 }
 
-/* Gradient Background Animation */
 .gradient-animated {
   background-size: 200% 200%;
   animation: gradientFlow 8s ease infinite;
 }
 
-/* Icon Rotation on Hover */
 .icon-rotate:hover {
   animation: rotate360 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Link Underline Animation */
 .link-underline {
   position: relative;
   text-decoration: none;
 }
 
 .link-underline::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 0;
   height: 2px;
@@ -767,7 +742,6 @@ html {
   width: 100%;
 }
 
-/* Parallax Scroll */
 .parallax {
   background-attachment: fixed;
   background-position: center;
@@ -775,7 +749,6 @@ html {
   background-size: cover;
 }
 
-/* Loading Animation */
 .loading-spinner {
   width: 40px;
   height: 40px;
@@ -785,22 +758,18 @@ html {
   animation: rotate360 1s linear infinite;
 }
 
-/* Glow Text */
 .glow-text {
   animation: textGlowPulse 3s ease-in-out infinite;
 }
 
-/* Smooth Fade */
 .fade-out {
   animation: slideOutDown 0.6s ease-in forwards;
 }
 
-/* Transform Origin Animations */
 .transform-origin-center {
   transform-origin: center;
 }
 
-/* Smooth Transitions for all interactive elements */
 button,
 a,
 input,
@@ -809,7 +778,6 @@ textarea {
   transition: all 0.2s ease-out;
 }
 
-/* Focus States */
 button:focus-visible,
 a:focus-visible,
 input:focus-visible {
@@ -817,7 +785,6 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
-/* Scroll Down Animations */
 @keyframes slideDownFade {
   0% {
     opacity: 0;
@@ -832,7 +799,6 @@ input:focus-visible {
   }
 }
 
-/* Custom cursor: native imleci gizle */
 html.cursor-none,
 html.cursor-none * {
   cursor: none !important;

@@ -39,7 +39,8 @@ export function LinksSection() {
             aria-label={label}
             className="group flex h-14 w-14 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/80 backdrop-blur-md shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/50 hover:bg-white/10 hover:text-white hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] md:h-16 md:w-16 button-interactive"
             style={{
-              animation: `slideInUp 0.6s ease-out ${index * 0.1}s backwards`}}
+              animation: `slideInUp 0.6s ease-out ${index * 0.1}s backwards`,
+            }}
           >
             <Icon className="h-6 w-6 md:h-7 md:w-7 transition-transform duration-300 group-hover:scale-110" />
           </a>

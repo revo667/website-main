@@ -9,10 +9,8 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import { GlobalAudioProvider } from "@/hooks/useGlobalAudio";
-
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -34,14 +32,14 @@ function NotFoundComponent() {
     </div>
   );
 }
-
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
+    reportLovableError(error, {
+      boundary: "tanstack_root_error_component",
+    });
   }, [error]);
-
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
@@ -72,28 +70,66 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     </div>
   );
 }
-
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+}>()({
   head: () => ({
     meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "revo667" },
-      { name: "description", content: "revo667.com" },
-      { name: "author", content: "Selim Yildiz" },
-      { property: "og:title", content: "revo667" },
-      { property: "og:description", content: "revo667.com" },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@revo667" },
+      {
+        charSet: "utf-8",
+      },
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
+      },
+      {
+        title: "revo667",
+      },
+      {
+        name: "description",
+        content: "revo667.com",
+      },
+      {
+        name: "author",
+        content: "Selim Yildiz",
+      },
+      {
+        property: "og:title",
+        content: "revo667",
+      },
+      {
+        property: "og:description",
+        content: "revo667.com",
+      },
+      {
+        property: "og:type",
+        content: "website",
+      },
+      {
+        name: "twitter:card",
+        content: "summary",
+      },
+      {
+        name: "twitter:site",
+        content: "@revo667",
+      },
     ],
     links: [
-      // .ico içinde 16'dan 256'ya altı boyut var ve her biri ayrı çizildi:
-      // küçüldükçe kenar boşluğu azalıyor, yoksa 16 pikselde işaret eziliyor.
-      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
-      { rel: "icon", type: "image/png", href: "/favicon.png", sizes: "any" },
-      // iOS köşeleri kendi yuvarlıyor, bu yüzden kare ve saydamlıksız.
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      {
+        rel: "icon",
+        href: "/favicon.ico",
+        sizes: "48x48",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/favicon.png",
+        sizes: "any",
+      },
+      {
+        rel: "apple-touch-icon",
+        href: "/apple-touch-icon.png",
+      },
       {
         rel: "stylesheet",
         href: "https://fonts.cdnfonts.com/css/zf2334-after-a-rain",
@@ -109,7 +145,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
 });
-
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
@@ -123,10 +158,8 @@ function RootShell({ children }: { children: ReactNode }) {
     </html>
   );
 }
-
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-
   return (
     <QueryClientProvider client={queryClient}>
       <GlobalAudioProvider>

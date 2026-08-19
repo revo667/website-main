@@ -1,4 +1,12 @@
-import { createContext, useContext, useRef, useEffect, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useRef,
+  useEffect,
+  useState,
+  useCallback,
+  ReactNode,
+} from "react";
 import { SOUNDS, Sound } from "../constants/sounds";
 import { useMusicPreference } from "../hooks/useMusicPreference";
 
@@ -12,7 +20,8 @@ interface GlobalAudioContextType {
   setIsPlaying: (playing: boolean) => void;
   setCurrentSound: (sound: Sound) => void;
   setVolume: (volume: number) => void;
-  audioRef: React.RefObject<HTMLAudioElement>;
+  audioRef: React.RefObject<HTMLAudioElement | null>;
+  attachAudio: (el: HTMLAudioElement | null) => void;
   playAudio: () => Promise<void>;
 }
 
@@ -25,11 +34,23 @@ export function GlobalAudioProvider({ children }: { children: ReactNode }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const { selectedSound, saveMusic } = useMusicPreference();
 
+  const volumeRef = useRef(volume);
+  volumeRef.current = volume;
+
+  const attachAudio = useCallback((el: HTMLAudioElement | null) => {
+    audioRef.current = el;
+    if (el) el.volume = volumeRef.current;
+  }, []);
+
   useEffect(() => {
     const savedVolume = localStorage.getItem(VOLUME_KEY);
     if (savedVolume) {
       const vol = parseFloat(savedVolume);
-      setVolumeState(vol);
+      if (Number.isFinite(vol)) {
+        const clamped = Math.min(1, Math.max(0, vol));
+        setVolumeState(clamped);
+        if (audioRef.current) audioRef.current.volume = clamped;
+      }
     }
 
     const savedPlaying = localStorage.getItem(PLAYING_KEY);
@@ -46,7 +67,7 @@ export function GlobalAudioProvider({ children }: { children: ReactNode }) {
         audioRef.current.load();
         if (isPlaying) {
           audioRef.current.play().catch((error) => {
-            console.error('Failed to play audio:', error, 'URL:', selectedSound.url);
+            console.error("Failed to play audio:", error, "URL:", selectedSound.url);
           });
         }
       }
@@ -57,7 +78,7 @@ export function GlobalAudioProvider({ children }: { children: ReactNode }) {
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.play().catch((error) => {
-          console.error('Play error:', error);
+          console.error("Play error:", error);
         });
       } else {
         audioRef.current.pause();
@@ -85,7 +106,7 @@ export function GlobalAudioProvider({ children }: { children: ReactNode }) {
       audioRef.current.load();
       if (isPlaying) {
         audioRef.current.play().catch((error) => {
-          console.error('Failed to play audio after sound change:', error, 'URL:', sound.url);
+          console.error("Failed to play audio after sound change:", error, "URL:", sound.url);
         });
       }
     }
@@ -96,7 +117,7 @@ export function GlobalAudioProvider({ children }: { children: ReactNode }) {
       try {
         await audioRef.current.play();
       } catch (error) {
-        console.error('Play error:', error);
+        console.error("Play error:", error);
       }
     }
   };
@@ -115,6 +136,7 @@ export function GlobalAudioProvider({ children }: { children: ReactNode }) {
         setCurrentSound,
         setVolume,
         audioRef,
+        attachAudio,
         playAudio,
       }}
     >

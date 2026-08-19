@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-// --- YÖNETİCİ ALANI ---
 const ADMIN_POSTS = [
   {
     id: 1,
@@ -25,31 +23,25 @@ const ADMIN_POSTS = [
     date: "14.06.2026",
   },
 ];
-
 export function PostsSection() {
   const [currentPage, setCurrentPage] = useState(0);
   const postsPerPage = 2;
   const totalPages = Math.ceil(ADMIN_POSTS.length / postsPerPage);
-
   const [likes, setLikes] = useState<Record<number, boolean>>({});
-
   useEffect(() => {
     console.log("PostsSection render edildi. Post sayısı:", ADMIN_POSTS.length);
   }, []);
-
   useEffect(() => {
     localStorage.setItem("currentPostsPage", String(currentPage));
     window.dispatchEvent(new Event("postsPageChange"));
   }, [currentPage]);
-
   const paginatedPosts = ADMIN_POSTS.slice(
     currentPage * postsPerPage,
     (currentPage + 1) * postsPerPage,
   );
-
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center p-6 font-mono relative bg-neutral-950/90">
-      {/* BAŞLIK VE LOGO */}
+      {}
       <div className="flex items-center gap-4 mb-12 animate-[fadeInDown_0.8s_ease-out]">
         <img
           src="/resim.png"
@@ -59,9 +51,9 @@ export function PostsSection() {
         <h2 className="text-lg tracking-widest text-white uppercase">/POSTS_LOG</h2>
       </div>
 
-      {/* ANA GÖVDE: POSTLAR */}
+      {}
       <div className="flex items-center gap-8 w-full max-w-2xl justify-center px-4">
-        {/* SOL OK */}
+        {}
         <button
           onClick={() => setCurrentPage((prev) => Math.max(0, prev - 1))}
           disabled={currentPage === 0}
@@ -70,7 +62,7 @@ export function PostsSection() {
           <ChevronLeft className="w-8 h-8 stroke-[1] text-white" />
         </button>
 
-        {/* POST BALONCUKLARI */}
+        {}
         <div className="flex-1 space-y-4">
           {paginatedPosts.length > 0 ? (
             paginatedPosts.map((post) => (
@@ -98,7 +90,7 @@ export function PostsSection() {
           )}
         </div>
 
-        {/* SAĞ OK */}
+        {}
         <button
           onClick={() => setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1))}
           disabled={currentPage === totalPages - 1 || totalPages === 0}
@@ -108,7 +100,7 @@ export function PostsSection() {
         </button>
       </div>
 
-      {/* SAYFA İNDİKATÖRÜ */}
+      {}
       <div className="mt-8 text-[10px] text-white/20 animate-[fadeInUp_0.8s_ease-out_0.2s_backwards]">
         {totalPages > 0 ? `${currentPage + 1} / ${totalPages}` : "0 / 0"}
       </div>

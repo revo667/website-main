@@ -1,43 +1,36 @@
 import { useEffect, useRef, useState } from "react";
-
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = useState(false);
-
   useEffect(() => {
-    // Sadece gerçek fare (touch değil) olan cihazlarda çalıştır
     if (!window.matchMedia("(pointer: fine)").matches) return;
     setEnabled(true);
-
     document.documentElement.classList.add("cursor-none");
-
     let mouseX = 0;
     let mouseY = 0;
     let frame = 0;
-
     const render = () => {
       frame = 0;
       const el = cursorRef.current;
       if (!el) return;
-      // Tek transform: sadece konum. Merkezleme çocuk elemanlarda yapılıyor.
       el.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
       el.style.opacity = "1";
     };
-
     const handleMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       if (!frame) frame = requestAnimationFrame(render);
     };
-
     const handleMouseLeave = () => {
       if (cursorRef.current) cursorRef.current.style.opacity = "0";
     };
-
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    window.addEventListener("pointermove", handleMouseMove, { passive: true });
+    window.addEventListener("mousemove", handleMouseMove, {
+      passive: true,
+    });
+    window.addEventListener("pointermove", handleMouseMove, {
+      passive: true,
+    });
     document.addEventListener("mouseleave", handleMouseLeave);
-
     return () => {
       document.documentElement.classList.remove("cursor-none");
       if (frame) cancelAnimationFrame(frame);
@@ -46,9 +39,7 @@ export function CustomCursor() {
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
-
   if (!enabled) return null;
-
   return (
     <div
       ref={cursorRef}
@@ -66,7 +57,7 @@ export function CustomCursor() {
         willChange: "transform",
       }}
     >
-      {/* Beyaz glow aura — imlecin tam merkezinde */}
+      {}
       <div
         style={{
           position: "absolute",
@@ -83,7 +74,7 @@ export function CustomCursor() {
         }}
       />
 
-      {/* Keskin beyaz nokta — tam pointer noktası */}
+      {}
       <div
         style={{
           position: "absolute",

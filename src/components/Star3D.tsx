@@ -1,29 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-
-/**
- * Star3D — krom yıldız amblem (three.js, R3F gerekmez).
- *
- * Kullanım (src/routes/index.tsx):
- *   <Star3D active={active} />
- *
- * Ana sayfada (active === 0) ekranın ortasında büyük durur; başka bir
- * bölüme geçildiğinde üst-orta kenara süzülüp küçülür ve dönüşü sürer.
- * Basılı tutup sürükleyerek 360° çevrilebilir.
- *
- * Gereksinim: npm i three
- */
 type Star3DProps = {
-  /** Aktif bölüm indeksi (index.tsx'teki `active`) */
   active?: number;
-  /** Ana sayfadaki kutu boyutu (CSS) */
   size?: string;
-  /** Küçültülmüş hâlin piksel boyu */
   smallSize?: number;
 };
-
 const EASE = "cubic-bezier(0.22,1,0.36,1)";
-
 export default function Star3D({
   active = 0,
   size = "min(60vh,600px)",
@@ -32,28 +14,33 @@ export default function Star3D({
   const markRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const boostRef = useRef<{ t: number; dir: number; fast: boolean } | null>(null);
+  const boostRef = useRef<{
+    t: number;
+    dir: number;
+    fast: boolean;
+  } | null>(null);
   const prevActive = useRef(active);
-
-  // --- sahne ---
+  const [noWebgl, setNoWebgl] = useState(false);
   useEffect(() => {
     const canvas = canvasRef.current!;
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
-      alpha: true,
-      preserveDrawingBuffer: true,
-    });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: true,
+        preserveDrawingBuffer: true,
+      });
+    } catch {
+      setNoWebgl(true);
+      return;
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.7;
-
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, 1, 0.05, 50);
     camera.position.set(0, 0, 2.15);
-
-    // Stüdyo environment: siyah sahne, büyük key softbox, karşı fill panel,
-    // dönerken kromun üstünde kayan parlama çizgileri veren tüp ışıklar.
     const ec = document.createElement("canvas");
     ec.width = 2048;
     ec.height = 1024;
@@ -95,7 +82,6 @@ export default function Star3D({
     ex.fillRect(0, 396, 2048, 14);
     ex.fillStyle = "rgba(255,255,255,0.95)";
     ex.fillRect(380, 452, 560, 44);
-
     const envTex = new THREE.CanvasTexture(ec);
     envTex.mapping = THREE.EquirectangularReflectionMapping;
     envTex.colorSpace = THREE.SRGBColorSpace;
@@ -103,7 +89,6 @@ export default function Star3D({
     scene.environment = pmrem.fromEquirectangular(envTex).texture;
     pmrem.dispose();
     envTex.dispose();
-
     scene.add(new THREE.HemisphereLight(0xffffff, 0x05050a, 0.16));
     const key = new THREE.DirectionalLight(0xffffff, 3.4);
     key.position.set(4, 6, 5);
@@ -114,7 +99,6 @@ export default function Star3D({
     const violet = new THREE.DirectionalLight(0x8b5cf6, 0.28);
     violet.position.set(-4, -1, 3);
     scene.add(key, kicker, rim, violet);
-
     const createStarShape = (outer: number, inner: number, points: number) => {
       const shape = new THREE.Shape();
       const step = (Math.PI * 2) / points;
@@ -142,7 +126,6 @@ export default function Star3D({
       shape.closePath();
       return shape;
     };
-
     const chrome = new THREE.MeshPhysicalMaterial({
       name: "chrome",
       color: 0xf4f4f8,
@@ -152,7 +135,6 @@ export default function Star3D({
       clearcoatRoughness: 0.015,
       envMapIntensity: 5,
     });
-
     const starGeo = new THREE.ExtrudeGeometry(createStarShape(0.5, 0.095, 4), {
       depth: 0.0025,
       bevelEnabled: true,
@@ -165,15 +147,12 @@ export default function Star3D({
     starGeo.computeVertexNormals();
     const star = new THREE.Mesh(starGeo, chrome);
     star.name = "star";
-
-    // Halka yıldızın düzlemini yalnızca kolların arasındaki köşegen
-    // yönlerde kesiyor; orada gövdeden ~0.29 m uzakta, temas yok.
     const ringGeo = new THREE.TorusGeometry(0.42, 0.013, 28, 320);
     const ring = new THREE.Mesh(ringGeo, chrome);
     ring.name = "orbit_ring";
     ring.rotation.x = 1.25;
     const orbit = new THREE.Group();
-    orbit.rotation.z = Math.PI / 4; // sağ üst ↔ sol alt köşegeni
+    orbit.rotation.z = Math.PI / 4;
     orbit.add(ring);
     const precess = new THREE.Group();
     precess.add(orbit);
@@ -182,7 +161,6 @@ export default function Star3D({
     const pivot = new THREE.Group();
     pivot.add(emblem);
     scene.add(pivot);
-
     const fit = () => {
       const r = canvas.getBoundingClientRect();
       renderer.setSize(r.width, r.height, false);
@@ -192,8 +170,6 @@ export default function Star3D({
     fit();
     const ro = new ResizeObserver(fit);
     ro.observe(canvas);
-
-    // basılı tutup sürükleyerek 360° çevirme (bırakınca durur)
     let dragId: number | null = null;
     let lastX = 0;
     let lastY = 0;
@@ -227,7 +203,6 @@ export default function Star3D({
     canvas.addEventListener("pointercancel", endDrag);
     window.addEventListener("pointerup", endDrag);
     window.addEventListener("blur", endDrag);
-
     const t0 = performance.now();
     const easeOut = (x: number) => 1 - Math.pow(1 - x, 3);
     renderer.setAnimationLoop(() => {
@@ -248,7 +223,6 @@ export default function Star3D({
       pivot.rotation.x = pitch;
       renderer.render(scene, camera);
     });
-
     return () => {
       renderer.setAnimationLoop(null);
       ro.disconnect();
@@ -265,13 +239,10 @@ export default function Star3D({
       renderer.dispose();
     };
   }, []);
-
-  // --- bölüm değişince: konum/ölçek + hızlı tur ---
   useEffect(() => {
     const mark = markRef.current;
     const glow = glowRef.current;
     if (!mark || !glow) return;
-
     if (active !== prevActive.current) {
       boostRef.current = {
         t: performance.now(),
@@ -280,7 +251,6 @@ export default function Star3D({
       };
       prevActive.current = active;
     }
-
     const apply = () => {
       const box = mark.offsetHeight || 1;
       if (active === 0) {
@@ -296,7 +266,6 @@ export default function Star3D({
     window.addEventListener("resize", apply);
     return () => window.removeEventListener("resize", apply);
   }, [active, smallSize]);
-
   return (
     <div
       ref={markRef}
@@ -322,7 +291,7 @@ export default function Star3D({
           width: "70%",
           height: "70%",
           borderRadius: 9999,
-          background: "rgba(76,29,149,0.3)",
+          background: noWebgl ? "rgba(76,29,149,0.45)" : "rgba(76,29,149,0.3)",
           filter: "blur(70px)",
           transition: "opacity 600ms",
         }}
@@ -330,7 +299,14 @@ export default function Star3D({
       />
       <canvas
         ref={canvasRef}
-        style={{ position: "relative", width: "100%", height: "100%", display: "block", pointerEvents: "auto" }}
+        aria-hidden
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          display: noWebgl ? "none" : "block",
+          pointerEvents: "auto",
+        }}
       />
     </div>
   );
