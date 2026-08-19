@@ -10,10 +10,16 @@ export interface Sound {
 
 export const SOUNDS: Sound[] = [
   {
-    id: "kalbim", // Benzersiz bir ID
-    name: "Kalbim <3", // Ekranda görünecek isim
-    url: "/kalbim.mp3", // PUBLIC KLASÖRÜNDEKİ ADI (Başında / işareti olmalı)
-    icon: Music, // İkon
+    id: "likeastar",
+    name: "Like a Star",
+    url: "/likeastar.mp3",
+    icon: Music,
+  },
+  {
+    id: "kalbim",
+    name: "Kalbim <3",
+    url: "/kalbim.mp3",
+    icon: Music,
   },
   {
     id: "heavy",
